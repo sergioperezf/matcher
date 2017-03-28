@@ -4,8 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "96098e473b028cdb2529580554a1ae3e",
+    "content-hash": "9f5cb79dcbda16c87e2564949bde96c4",
     "packages": [
+        {
+            "name": "bdelespierre/php-kmeans",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bdelespierre/php-kmeans.git",
+                "reference": "2c637d4e8845b03f0187cbb5d69ef66c1506a4a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bdelespierre/php-kmeans/zipball/2c637d4e8845b03f0187cbb5d69ef66c1506a4a3",
+                "reference": "2c637d4e8845b03f0187cbb5d69ef66c1506a4a3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "KMeans": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Delespierre",
+                    "email": "benjamin.delespierre@gmail.com"
+                }
+            ],
+            "description": "K-Means algorithm for PHP",
+            "keywords": [
+                "kmeans",
+                "kmeans plus plus",
+                "php",
+                "utility"
+            ],
+            "time": "2015-12-03 09:55:15"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -3338,7 +3380,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "bdelespierre/php-kmeans": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
