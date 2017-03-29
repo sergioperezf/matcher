@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\LocalGeolocator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(
+            'App\Services\LocalGeolocator',
+            function($app) {
+                return new LocalGeolocator();
+            }
+        );
+
+        $this->app->bind(
+            'App\Services\Geolocator',
+            'App\Services\LocalGeolocator'
+        );
+
+        $this->app->bind(
+            
+        );
         //
     }
 }
