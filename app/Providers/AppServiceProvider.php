@@ -64,11 +64,17 @@ class AppServiceProvider extends ServiceProvider
             }
         );
 
-        $this->app->bind('dotzero\GMapsGeocode',
+        $this->app->bind(
+            'dotzero\GMapsGeocode',
             function ($app) {
                 $key = env('GOOGLE_MAPS_KEY');
                 return new GMapsGeocode($key);
             }
+        );
+
+        $this->app->bind(
+            'App\Services\Matcher',
+            'App\Services\MatcherService'
         );
     }
 }

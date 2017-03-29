@@ -5,7 +5,6 @@
 
 namespace App\Algorithms;
 
-use KMeans\Cluster;
 use KMeans\Space;
 
 /**
@@ -18,9 +17,14 @@ use KMeans\Space;
 class KMeansExtended extends Space {
 
     /**
-     * @var bool whether the centers of the clusters were manually given.
+     * @var boolean whether the centers of the clusters were manually given.
      */
     protected $clustersGiven = false;
+
+    /**
+     * @var boolean
+     */
+    protected $converge = true;
 
     /**
      * @param integer|array $nbClusters
@@ -30,8 +34,9 @@ class KMeansExtended extends Space {
     protected function initializeClusters($nbClusters, $seed) {
         if ($this->clustersGiven) {
             $clusters = [];
-            foreach ($nbClusters as $center) {
-                $clusters[] = new Cluster($this, $center);
+            foreach ($nbClusters as $agent) {
+                $cluster = new Cluster($this, $agent->getCoordinates(), $agent);
+                $clusters[] = $cluster;
             }
             $clusters[0]->attachAll($this);
             return $clusters;
@@ -44,10 +49,12 @@ class KMeansExtended extends Space {
      * @param integer|array $nbClusters
      * @param int $seed
      * @param callable $iterationCallback
+     * @param boolean $converge
      * @return array|mixed
      */
-    public function solve($nbClusters, $seed = self::SEED_DEFAULT, $iterationCallback = null)
+    public function solve($nbClusters, $seed = self::SEED_DEFAULT, $iterationCallback = null, $converge = true)
     {
+        $this->converge = $converge;
         $this->clustersGiven = is_array($nbClusters);
         return parent::solve($nbClusters, $seed, $iterationCallback);
     }
@@ -62,7 +69,7 @@ class KMeansExtended extends Space {
          * Flags the termination of the iterations if the clusters were given. We
          * want that if the clusters are given, convergence not be sought after.
          */
-        if ($this->clustersGiven) {
+        if (!$this->converge) {
             return false;
         }
         return $continue;
