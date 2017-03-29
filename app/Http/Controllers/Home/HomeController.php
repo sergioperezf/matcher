@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Algorithms\KMeansExtended;
 use App\Http\Controllers\Controller;
 use App\Services\Geolocator;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class HomeController
@@ -16,14 +18,66 @@ class HomeController extends Controller
      */
     protected $geolocator;
 
-    public function __construct(Geolocator $geolocator)
+    /**
+     * @var KMeansExtended
+     */
+    protected $kMeans;
+
+    public function __construct(Geolocator $geolocator, KMeansExtended $kMeans)
     {
+        $this->kMeans = $kMeans;
         $this->geolocator = $geolocator;
     }
 
     public function __invoke()
     {
-        $coordinates = $this->geolocator->getCoordinatesByZipCode('4837');
+        $zips = [
+            85273,
+            85750,
+            85751,
+            85383,
+            85716,
+            85014,
+            85751,
+            95032,
+            94556,
+            92260,
+            92120,
+            94062,
+            90503,
+            32159,
+            32404,
+            33140,
+            33417,
+            32789,
+            33417,
+            32034,
+            30516,
+            30345,
+            30606,
+            30312,
+            31901,
+            31410,
+            89451,
+            89110,
+            89042,
+            89074,
+            89705,
+            89144,
+            89145,
+            12580,
+            10604,
+            13601,
+            10021,
+            12550,
+            10603,
+            12018,
+        ];
+        $coordinates = [];
+        foreach ($zips as $zip) {
+            $coordinates[] = $this->geolocator->getCoordinatesByZipCode($zip);
+        }
+        var_dump($coordinates);
         $points = [
             [229	,	231],
             [655	,	136],
