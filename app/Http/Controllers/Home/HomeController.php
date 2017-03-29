@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Algorithms\KMeansExtended;
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Services\Geolocator;
 use Illuminate\Support\Facades\Cache;
 
@@ -31,51 +32,56 @@ class HomeController extends Controller
 
     public function __invoke()
     {
-        $zips = [
-            85273,
-            85750,
-            85751,
-            85383,
-            85716,
-            85014,
-            85751,
-            95032,
-            94556,
-            92260,
-            92120,
-            94062,
-            90503,
-            32159,
-            32404,
-            33140,
-            33417,
-            32789,
-            33417,
-            32034,
-            30516,
-            30345,
-            30606,
-            30312,
-            31901,
-            31410,
-            89451,
-            89110,
-            89042,
-            89074,
-            89705,
-            89144,
-            89145,
-            12580,
-            10604,
-            13601,
-            10021,
-            12550,
-            10603,
-            12018,
+        $rawData = [
+            ['Michael',85273],
+            ['James',85750],
+            ['Brian',85751],
+            ['Nicholas',85383],
+            ['Jennifer',85716],
+            ['Christopher',85014],
+            ['Michael',85751],
+            ['Patricia',95032],
+            ['Beth',94556],
+            ['Cathy',92260],
+            ['Harold',92120],
+            ['Robin',94062],
+            ['James',90503],
+            ['Douglas',32159],
+            ['Donald',32404],
+            ['Ilene',33140],
+            ['William',33417],
+            ['Lynn',32789],
+            ['Leonie',33417],
+            ['Katherine',32034],
+            ['Melissa',30516],
+            ['Kimberly',30345],
+            ['Richard',30606],
+            ['Richard',30312],
+            ['Ayn',31901],
+            ['Bruce',31410],
+            ['Fred',89451],
+            ['Robert',89110],
+            ['David',89042],
+            ['Maureen',89074],
+            ['Mary Sue',89705],
+            ['Janet',89144],
+            ['John',89145],
+            ['Rand',12580],
+            ['Kathy',10604],
+            ['Susan',13601],
+            ['Robin',10021],
+            ['Peter',12550],
+            ['Diana',10603],
+            ['Richard',12018],
         ];
+        $contacts = [];
+        foreach ($rawData as $contact) {
+            $contacts[] = new Contact($contact[0], $contact[1]);
+        }
         $coordinates = [];
-        foreach ($zips as $zip) {
-            $coordinates[] = $this->geolocator->getCoordinatesByZipCode($zip);
+        foreach ($contacts as $contact) {
+            $contact->setCoordinates($this->geolocator->getCoordinatesByZipCode($contact->getZip()));
+            $coordinates[] = $contact->getCoordinates();
         }
         var_dump($coordinates);
         $points = [
