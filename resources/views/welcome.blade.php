@@ -62,34 +62,43 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            #points, #clustered-points {
+                display: none;
+            }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
+    <ul id="points">
+        @foreach ($points as $point)
+            <li data-x="{{ $point[0] }}" data-y="{{ $point[1] }}"></li>
+        @endforeach
+    </ul>
+    <ul id="clustered-points">
+        @foreach ($clusteredData as $cluster)
+            <ul>
+            @foreach ($cluster as $point)
+                <li data-x="{{ $point[0] }}" data-y="{{ $point[1] }}"></li>
+            @endforeach
+            </ul>
+        @endforeach
+    </ul>
+    <canvas id="canvas">
+    </canvas>
+    <script>
+        var clusters = document.getElementById('clustered-points').getElementsByTagName('ul');
+        var canvas = document.getElementById("canvas");
+        canvas.setAttribute("width", window.innerWidth);
+        canvas.setAttribute("height", window.innerHeight);
+        var ctx = canvas.getContext("2d");
+        var colours = ['green', 'blue', 'red', 'yellow', 'gray'];
+        for (let i = 0; i < clusters.length; i++) {
+            let points = clusters[i].getElementsByTagName('li');
+            ctx.fillStyle = colours[i];
+            for (let i = 0; i < points.length; i++) {
+                ctx.fillRect(points[i].dataset.x, points[i].dataset.y, 5, 5);
+            }
+        }
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
+    </script>
     </body>
 </html>
