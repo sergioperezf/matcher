@@ -11,7 +11,7 @@
     <link href="css/app.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
+@yield('alerts')
 <div class="content container">
     @yield('content')
 </div>

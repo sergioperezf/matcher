@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Match;
 
 
 use App\Algorithms\KMeansExtended;
+use App\Exceptions\ZipNotValidException;
 use App\Http\Controllers\Controller;
 use App\Models\Agent;
 use App\Models\Contact;
@@ -39,8 +40,12 @@ class MatchController extends Controller {
     public function __invoke(Request $request) {
         $agents[] = new Agent('Agent A', $request->get('agent-a-zip'));
         $agents[] = new Agent('Agent B', $request->get('agent-b-zip'));
-        foreach ($agents as $agent) {
-            $agent->setCoordinates($this->geolocator->getCoordinatesByZipCode($agent->getZip()));
+        try {
+            foreach ($agents as $agent) {
+                $agent->setCoordinates($this->geolocator->getCoordinatesByZipCode($agent->getZip()));
+            }
+        } catch (ZipNotValidException $e) {
+            return view('welcome', ['error' => $e->getMessage()]);
         }
 
         $contacts = [];
