@@ -27,7 +27,7 @@ class MatcherService implements Matcher
     function matchContactsToAgents($contacts, $agents)
     {
         foreach ($contacts as $contact) {
-            $this->kMeans->attach($this->kMeans->newPoint($contact->getCoordinates()), $contact);
+            $this->kMeans->addPoint($contact->getCoordinates(), $contact);
         }
 
         $clusters = $this->kMeans->solve($agents, null, null, false);

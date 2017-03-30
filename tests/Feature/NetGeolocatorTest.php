@@ -31,7 +31,7 @@ class NetGeolocatorTest extends TestCase
     }
 
     /**
-     * Tests that an exception is thrown when the code is not found.
+     * Tests that no exception is thrown when the code is invalid.
      */
     public function testInvalidZip()
     {
