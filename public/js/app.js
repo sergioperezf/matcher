@@ -63,28 +63,103 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 39);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
-/******/ ({
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 10:
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(2);
+
+__webpack_require__(3);
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-
-/***/ 30:
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window.$ = window.jQuery = __webpack_require__(32);
+window.$ = window.jQuery = __webpack_require__(5);
 
-__webpack_require__(31);
+__webpack_require__(4);
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports) {
 
-/***/ 31:
+function initMap() {
+    'use strict';
+
+    var myLatLng = { lat: 30.363, lng: -90.044 },
+        map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 3,
+        center: myLatLng
+    }),
+        contacts = document.getElementsByClassName('contact-info');
+
+    var _loop = function _loop(i) {
+        var lat = contacts[i].dataset.lat;
+        var lng = contacts[i].dataset.lng;
+        var name = contacts[i].innerHTML;
+        var agent = contacts[i].dataset.agent;
+        var marker = new google.maps.Marker({
+            position: { 'lat': parseInt(lat), 'lng': parseInt(lng) },
+            map: map,
+            title: name
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Name: ' + name + '. Agent: ' + agent
+        });
+
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+    };
+
+    for (var i = contacts.length - 1; i >= 0; i--) {
+        _loop(i);
+    }
+
+    var agents = document.getElementsByClassName('agent-info');
+
+    var _loop2 = function _loop2(i) {
+        var lat = agents[i].dataset.lat;
+        var lng = agents[i].dataset.lng;
+        var name = agents[i].innerHTML;
+        var marker = new google.maps.Marker({
+            position: { 'lat': parseInt(lat), 'lng': parseInt(lng) },
+            map: map,
+            label: 'A'
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Agent: ' + name
+        });
+
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+    };
+
+    for (var i = agents.length - 1; i >= 0; i--) {
+        _loop2(i);
+    }
+}
+
+initMap();
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 /*!
@@ -2467,8 +2542,7 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-
-/***/ 32:
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -12728,94 +12802,12 @@ return jQuery;
 
 
 /***/ }),
-
-/***/ 39:
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(9);
-module.exports = __webpack_require__(10);
+__webpack_require__(0);
+module.exports = __webpack_require__(1);
 
-
-/***/ }),
-
-/***/ 48:
-/***/ (function(module, exports) {
-
-function initMap() {
-    'use strict';
-
-    var myLatLng = { lat: 30.363, lng: -90.044 },
-        map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 3,
-        center: myLatLng
-    }),
-        contacts = document.getElementsByClassName('contact-info');
-
-    var _loop = function _loop(i) {
-        var lat = contacts[i].dataset.lat;
-        var lng = contacts[i].dataset.lng;
-        var name = contacts[i].innerHTML;
-        var agent = contacts[i].dataset.agent;
-        var marker = new google.maps.Marker({
-            position: { 'lat': parseInt(lat), 'lng': parseInt(lng) },
-            map: map,
-            title: name
-        });
-        var infowindow = new google.maps.InfoWindow({
-            content: 'Name: ' + name + '. Agent: ' + agent
-        });
-
-        marker.addListener('click', function () {
-            infowindow.open(map, marker);
-        });
-    };
-
-    for (var i = contacts.length - 1; i >= 0; i--) {
-        _loop(i);
-    }
-
-    var agents = document.getElementsByClassName('agent-info');
-
-    var _loop2 = function _loop2(i) {
-        var lat = agents[i].dataset.lat;
-        var lng = agents[i].dataset.lng;
-        var name = agents[i].innerHTML;
-        var marker = new google.maps.Marker({
-            position: { 'lat': parseInt(lat), 'lng': parseInt(lng) },
-            map: map,
-            label: 'A'
-        });
-        var infowindow = new google.maps.InfoWindow({
-            content: 'Agent: ' + name
-        });
-
-        marker.addListener('click', function () {
-            infowindow.open(map, marker);
-        });
-    };
-
-    for (var i = agents.length - 1; i >= 0; i--) {
-        _loop2(i);
-    }
-}
-
-initMap();
-
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(30);
-
-__webpack_require__(48);
 
 /***/ })
-
-/******/ });
+/******/ ]);

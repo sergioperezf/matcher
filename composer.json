@@ -1,6 +1,6 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
+    "name": "seperez/matcher",
+    "description": "Agents Matcher.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
