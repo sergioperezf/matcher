@@ -1,13 +1,17 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
+    "name": "seperez/matcher",
+    "description": "Agents Matcher.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "bdelespierre/php-kmeans": "dev-master",
+        "dotzero/gmaps-geocode": "^0.6.0",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "predis/predis": "^1.1",
+        "uvinum/zipcodevalidator": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

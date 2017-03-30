@@ -1,51 +1,32 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Matcher
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+This is a Laravel application implementing a matcher between agents and contacts based on Zip Code. 
 
-## About Laravel
+## Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+To install the application, ensure that `composer` is installed and run `composer install`. Composer will take care of alerting you if any PHP dependencies are not present.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+For the front end, install `nodejs`and `npm`. Once they are installed, run `npm install` from the root directory.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+## Configuration
 
-## Learning Laravel
+First, copy the file `.env.example` to `.env` in the root directory. At the bottom of this file, replace your Google Maps API key, and tweak the rest of the file according to the environment.
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+Make sure the webserver has write access to the `storage` directory.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+This app comes with `predis` listed as a dependency, so using Redis as a cache driver is just a matter of coniguring it in the `.env` file.
 
-## Laravel Sponsors
+## 3rd Party components
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+This project makes use of a number of 3rd party libraries:
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- **[Codecourse](https://www.codecourse.com)**
-- [Fragrantica](https://www.fragrantica.com)
+- `dotzero/gmaps-geocode`: the project uses this libraries to communicate with the Google Maps API for geolocalization of zip codes. *Althought the Google Maps API will be used to retrieve zip coordinates, many of the coordinates are already in a file calle codes.csv, and all of them are cached after retrieval.*
+- `uvinum/zipcodevalidator`: used to validate zip codes entered by the user.
+- `bdelespierre/php-kmeans`: this is the main library used to match the agents to the contacts. An extension was made to it in order to adapt it to the needs, but at its core the matching is perfomed based on the K-means clustering algorithm.
+- `predis/predis`: used in case we want to use redis as the cache driver.
 
-## Contributing
+## Front-end
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+To build the front-end assets use `npm run <script>`, where `<script>` is the desired environment, `dev` or `prod`.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Running `npm run watch` will set up a watcher that will re-build the assets everytime a file changes.
