@@ -8,6 +8,7 @@ use App\Services\NetGeolocator;
 use App\Services\RedundantGeolocator;
 use dotzero\GMapsGeocode;
 use Illuminate\Support\ServiceProvider;
+use Uvinum\ZipCode\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,7 +49,8 @@ class AppServiceProvider extends ServiceProvider
             function($app) {
                 $localGeolocator = $app->make('App\Services\LocalGeolocator');
                 $netGeolocator = $app->make('App\Services\NetGeolocator');
-                return new RedundantGeolocator($localGeolocator, $netGeolocator);
+                $zipValidator = new Validator();
+                return new RedundantGeolocator($localGeolocator, $netGeolocator, $zipValidator);
             }
         );
 

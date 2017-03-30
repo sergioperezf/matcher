@@ -5,6 +5,8 @@
 
 namespace App\Algorithms;
 
+use App\Exceptions\InvalidArgumentException;
+use App\Models\Agent;
 use KMeans\Space;
 
 /**
@@ -29,13 +31,18 @@ class KMeansExtended extends Space {
     /**
      * @param integer|array $nbClusters
      * @param integer $seed
+     * @throws InvalidArgumentException
      * @return array
      */
     protected function initializeClusters($nbClusters, $seed) {
         if ($this->clustersGiven) {
             $clusters = [];
             foreach ($nbClusters as $agent) {
-                $cluster = new Cluster($this, $agent->getCoordinates(), $agent);
+                if ($agent instanceof Agent && is_array($agent->getCoordinates())) {
+                    $cluster = new Cluster($this, $agent->getCoordinates(), $agent);
+                } else {
+                    throw new InvalidArgumentException('Invalid Agent.');
+                }
                 $clusters[] = $cluster;
             }
             $clusters[0]->attachAll($this);
