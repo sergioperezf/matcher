@@ -64,11 +64,29 @@ class AppServiceProvider extends ServiceProvider
             }
         );
 
-        $this->app->bind('dotzero\GMapsGeocode',
+        $this->app->bind(
+            'dotzero\GMapsGeocode',
             function ($app) {
                 $key = env('GOOGLE_MAPS_KEY');
                 return new GMapsGeocode($key);
             }
         );
+
+        $this->app->bind(
+            'App\Services\Matcher',
+            'App\Services\MatcherService'
+        );
+
+        $fileName = base_path('resources/data/contacts.csv');
+        $file = fopen($fileName, "r");
+        $contacts = [];
+        while (($data = fgetcsv($file, 0, ",")) !== false) {
+            $contacts[] = $data;
+        }
+        fclose($file);
+        
+        $this->app->when('App\Http\Controllers\Match\MatchController')
+            ->needs('$initialContacts')
+            ->give($contacts);
     }
 }

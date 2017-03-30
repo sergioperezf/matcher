@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'Home\HomeController');
+Route::post('/match', 'Match\MatchController');
