@@ -76,5 +76,17 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\Matcher',
             'App\Services\MatcherService'
         );
+
+        $fileName = base_path('resources/data/contacts.csv');
+        $file = fopen($fileName, "r");
+        $contacts = [];
+        while (($data = fgetcsv($file, 0, ",")) !== false) {
+            $contacts[] = $data;
+        }
+        fclose($file);
+        
+        $this->app->when('App\Http\Controllers\Match\MatchController')
+            ->needs('$initialContacts')
+            ->give($contacts);
     }
 }

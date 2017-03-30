@@ -18,10 +18,8 @@ class LocalGeolocator implements Geolocator
 
     public function __construct()
     {
-        // todo device a better way to do this without having to read the entire file
-        // on every request
-        $file_n = storage_path('app/codes.csv'); // todo move this to config
-        $file = fopen($file_n, "r");
+        $fileName = base_path('resources/data/codes.csv');
+        $file = fopen($fileName, "r");
         $coordinates = [];
         while (($data = fgetcsv($file, 0, ",")) !== false) {
             $zip = $data[0];
